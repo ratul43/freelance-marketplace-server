@@ -31,7 +31,12 @@ async function run() {
     const db = client.db('smart_db')
     const jobCollection = db.collection('jobs')
 
-    
+    app.get('/jobs', async (req, res) => {
+
+        const result = await jobCollection.find().toArray()
+        
+        res.send(result)
+    })
 
 
 
