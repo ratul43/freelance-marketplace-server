@@ -39,6 +39,13 @@ async function run() {
     })
 
 
+    app.get('/latest-jobs', async (req, res) => {
+
+        const result = await jobCollection.find().sort({
+postedAt: 'desc'}).limit(6).toArray()
+        
+        res.send(result)
+    })
 
 
 
