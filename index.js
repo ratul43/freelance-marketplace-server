@@ -110,7 +110,16 @@ postedAt: 'desc'}).limit(6).toArray()
     })
 
 
+    app.get('/myAddedJobs', async(req, res) => {
+      const email = req.query.email 
+      
+      const result = await jobCollection.find({userEmail: email}).toArray()
 
+      res.send({
+        success: true,
+        result
+      })
+    })
 
 
 
