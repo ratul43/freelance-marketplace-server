@@ -6,7 +6,7 @@ const port = 3000
 require('dotenv').config()
 
 
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 
 app.use(cors())
 app.use(express.json())
@@ -47,8 +47,21 @@ postedAt: 'desc'}).limit(6).toArray()
         res.send(result)
     })
 
+    app.post('/jobs', async(req, res) => {
+      const data = req.body 
+      // console.log(data);
+      
+      const result = await jobCollection.insertOne(data)
+
+      res.send({
+        success: true,
+        result
+      })
+
+    })
 
 
+    
 
 
 
