@@ -31,7 +31,7 @@ async function run() {
     const db = client.db('smart_db')
     const jobCollection = db.collection('jobs')
 
-    app.get('/jobs', async (req, res) => {
+    app.get('/allJobs', async (req, res) => {
 
         const result = await jobCollection.find().toArray()
         
@@ -47,7 +47,7 @@ postedAt: 'desc'}).limit(6).toArray()
         res.send(result)
     })
 
-    app.post('/jobs', async(req, res) => {
+    app.post('/addJob', async(req, res) => {
       const data = req.body 
       // console.log(data);
       
@@ -61,7 +61,7 @@ postedAt: 'desc'}).limit(6).toArray()
     })
 
 
-    app.get('/jobDetails/:id', async (req, res) => {
+    app.get('/allJobs/:id', async (req, res) => {
       const id = req.params.id
       
       const result = await jobCollection.findOne({_id: new ObjectId(id)})
@@ -74,6 +74,28 @@ postedAt: 'desc'}).limit(6).toArray()
       
     })
 
+    app.put('/updateJob/:id', async(req, res) => {
+
+      const id = req.params.id 
+      const data = req.body
+     
+      
+      const objectId = new ObjectId(id)
+
+      const filter = {_id: objectId}
+
+      const update = {
+        $set: data 
+      }
+
+      const result = await jobCollection.updateOne(filter, update)
+
+
+      res.send({
+        success: true,
+        result
+      })
+    })
 
 
     // Send a ping to confirm a successful connection
