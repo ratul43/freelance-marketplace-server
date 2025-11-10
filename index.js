@@ -61,7 +61,18 @@ postedAt: 'desc'}).limit(6).toArray()
     })
 
 
-    
+    app.get('/jobDetails/:id', async (req, res) => {
+      const id = req.params.id
+      
+      const result = await jobCollection.findOne({_id: new ObjectId(id)})
+
+      
+      res.send({
+        success: true,
+        result
+      })
+      
+    })
 
 
 
