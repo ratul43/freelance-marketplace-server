@@ -137,6 +137,12 @@ postedAt: 'desc'}).limit(6).toArray()
 
     })
 
+    app.get('/my-accepted-tasks', async(req, res) => {
+      const result = await acceptCollection.find().toArray()
+
+      res.send(result)
+    })
+
 
 
 
