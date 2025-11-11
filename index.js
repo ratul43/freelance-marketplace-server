@@ -144,6 +144,12 @@ postedAt: 'desc'}).limit(6).toArray()
     })
 
 
+    app.delete('/doneJobs', async(req, res) => {
+      const id = req.query.id 
+      const result = await acceptCollection.deleteOne({_id: new ObjectId(id)})
+      
+      res.send(result)
+    })
 
 
 
