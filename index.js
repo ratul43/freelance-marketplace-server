@@ -32,12 +32,14 @@ async function run() {
     const jobCollection = db.collection('jobs')
     const acceptCollection = db.collection('accepts')
 
-    app.get('/allJobs', async (req, res) => {
-
+    app.get('/allJobs', async(req, res) => {
+    try {
         const result = await jobCollection.find().toArray()
-        
         res.send(result)
-    })
+    } catch (error) {
+        res.status(500).send({ error: error.message })
+    }
+})
 
 
     app.get('/latest-jobs', async (req, res) => {
@@ -150,6 +152,52 @@ postedAt: 'desc'}).limit(6).toArray()
       
       res.send(result)
     })
+
+
+
+    app.get('/sort-ascending', async(req, res) => {
+      try{
+        const result = await jobCollection.find().sort({postedAt: 1}).toArray()
+      res.send(result)
+      }
+      catch(error){
+         res.status(500).send({ error: error.message })
+      }
+    })
+
+
+    app.get('/sort-descending', async(req, res) => {
+      try {
+        const result = await jobCollection.find().sort({postedAt: -1}).toArray()
+        res.send(result) // CHANGED: Send the actual data
+    } catch (error) {
+        res.status(500).send({ error: error.message })
+    }
+    })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
