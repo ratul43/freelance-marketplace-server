@@ -30,6 +30,7 @@ async function run() {
 
     const db = client.db('smart_db')
     const jobCollection = db.collection('jobs')
+    const acceptCollection = db.collection('accepts')
 
     app.get('/allJobs', async (req, res) => {
 
@@ -122,6 +123,19 @@ postedAt: 'desc'}).limit(6).toArray()
     })
 
 
+    // accepted job routes 
+
+    app.post('/my-accepted-tasks', async(req, res) => {
+      const data = req.body 
+
+      const result = await acceptCollection.insertOne(data)
+
+      res.send({
+        success: true,
+       result
+      })
+
+    })
 
 
 
