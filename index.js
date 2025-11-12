@@ -140,7 +140,9 @@ postedAt: 'desc'}).limit(6).toArray()
     })
 
     app.get('/my-accepted-tasks', async(req, res) => {
-      const result = await acceptCollection.find().toArray()
+      const email = req.query.email 
+      
+      const result = await acceptCollection.find({addedBy: email}).toArray()
 
       res.send(result)
     })
