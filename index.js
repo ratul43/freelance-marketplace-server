@@ -41,14 +41,17 @@ async function run() {
     }
 })
 
-
-    app.get('/latest-jobs', async (req, res) => {
-
-        const result = await jobCollection.find().sort({
-postedAt: 'desc'}).limit(6).toArray()
-        
-        res.send(result)
+    app.get('/latest-jobs', async(req, res) => {
+      try {
+        const result = await jobCollection.find().sort({postedAt: -1}).toArray()
+        res.send(result) // CHANGED: Send the actual data
+    } catch (error) {
+        res.status(500).send({ error: error.message })
+    }
     })
+
+
+
 
     app.post('/addJob', async(req, res) => {
       const data = req.body 
