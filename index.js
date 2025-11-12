@@ -43,7 +43,7 @@ async function run() {
 
     app.get('/latest-jobs', async(req, res) => {
       try {
-        const result = await jobCollection.find().sort({postedAt: -1}).toArray()
+        const result = await jobCollection.find().sort({postedAt: -1}).limit(6).toArray()
         res.send(result) // CHANGED: Send the actual data
     } catch (error) {
         res.status(500).send({ error: error.message })
@@ -119,7 +119,7 @@ async function run() {
     app.get('/myAddedJobs', async(req, res) => {
       const email = req.query.email 
       
-      const result = await jobCollection.find({userEmail: email}).toArray()
+      const result = await jobCollection.find({userEmail: email}).sort({postedAt: -1}).toArray()
 
       res.send({
         success: true,
