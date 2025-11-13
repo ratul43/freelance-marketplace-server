@@ -142,12 +142,20 @@ async function run() {
 
     })
 
+
     app.get('/my-accepted-tasks', async(req, res) => {
-      const email = req.query.email 
+      try{
+const email = req.query.email 
       
-      const result = await acceptCollection.find({addedBy: email}).toArray()
+      const result = await acceptCollection.find({addedBy: email}).sort({acceptedAt: -1}).toArray()
 
       res.send(result)
+      }
+      catch (error) {
+        res.status(500).send({ error: error.message })
+
+      }
+      
     })
 
 
